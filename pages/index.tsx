@@ -33,7 +33,7 @@ export default function Home() {
       }) as any
   }
   return (
-    <div>ちんちん</div>
+    <div>hello world!!</div>
   )
 }
 
