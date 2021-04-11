@@ -40,6 +40,7 @@ export const Layout = () => {
         />
         <SpaceMedium className="module-spacer--medium" />
         <PageJump onClick={() => Router.push('/sign_up')}>ユーザー登録がお済みでない方はこちら</PageJump>
+        <SpaceMedium className="module-spacer--small" />
         <PageJump onClick={() => Router.push('/reset')}>パスワードを忘れた方はこちら</PageJump>
       </WrapperCenter>
     </Wrapper>
