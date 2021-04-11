@@ -2,11 +2,11 @@ import { commonRequest, CommonResult } from './FetchClient'
 import Cookies from 'universal-cookie'
 
 export const postSignup = (params: {
-  username: string
+  name: string
   nickname: string
   email: string
   password: string
-  passwordConfirmation: string
+  password_confirmation: string
 }): Promise<CommonResult<{
   access_token: string
   client: string
@@ -47,4 +47,4 @@ export const getAuth = (
   user: string
   user_sign_in: boolean
   message: string
-}>> => commonRequest('/', 'get', {}, headerInfo)
+}>> => commonRequest('todos', 'get', {}, headerInfo)

@@ -54,7 +54,15 @@ export const SignupContextProvider: React.FC<PageProps> = ({ children, ...props 
   }
 
   const sigUpFetch = async () => {
-    const result = await postSignup({username, nickname, email, password, passwordConfirmation})
+    console.log(username, nickname, email, password, passwordConfirmation)
+    const result = await postSignup({
+      name: username,
+      nickname: nickname,
+      email: email,
+      password: password,
+      password_confirmation: passwordConfirmation
+    })
+    console.log(result)
     if (result.success) {
       setCookies(result.body)
       Router.push('/')
