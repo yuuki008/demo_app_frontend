@@ -40,7 +40,7 @@ const fetchClient = (url: string, options: object) => {
     .then((res:any) => {
       const status = res.status
       if(status !== 200) {
-        return { success: true, status}
+        return { success: false, status}
       }
       return res.json().then((body: any) => {
         return { success: true, status, body}
