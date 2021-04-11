@@ -41,12 +41,10 @@ export const passwordUpdate = (
 ): Promise<CommonResult<{ success: boolean; data: any; message: string }>> =>
   commonRequest('auth/password', 'put', params, headerInfo)
 
-  export const getAuth = (
-    headerInfo: HeaderInfo
-  ): Promise<CommonResult<{
-    user: string
-    user_sign_in: boolean
-    message: string
-  }>> => {
-    return commonRequest('/', 'get', {}, headerInfo)
-  }
+export const getAuth = (
+  headerInfo: HeaderInfo
+): Promise<CommonResult<{
+  user: string
+  user_sign_in: boolean
+  message: string
+}>> => commonRequest('/', 'get', {}, headerInfo)
