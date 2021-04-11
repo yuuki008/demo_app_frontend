@@ -63,7 +63,7 @@ export const Layout = () => {
       <SpaceMedium className="module-spacer--medium" />
       <WrapperCenter className="center">
         <PrimaryButton
-          label={context.isPosting ? 'サインアップ' : 'サインアップ中...'}
+          label={context.isPosting ? 'サインアップ中...' : 'サインアップ'}
           onClick={() =>
               context.onSubmit()
           }
