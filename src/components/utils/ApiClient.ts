@@ -47,4 +47,6 @@ export const getAuth = (
   user: string
   user_sign_in: boolean
   message: string
-}>> => commonRequest('todos', 'get', {}, headerInfo)
+}>> => {
+  return commonRequest('todos', 'get', {}, headerInfo)
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import Router from 'next/router'
-import { postSignin, postSignup } from '../utils/ApiClient'
+import { postSignin } from '../utils/ApiClient'
 import { swalAlert } from '../uikit/Alert'
 import Cookies from 'universal-cookie'
 

@@ -62,6 +62,7 @@ export default class MyApp extends App<Props, State> {
   }
 
   static checkAuth = async (headerInfo: HeaderInfo) => {
+    console.log(headerInfo)
     const result = await getAuth(headerInfo)
     console.log(result)
     if (result.success && result.body && result.body.user_sign_in) {
