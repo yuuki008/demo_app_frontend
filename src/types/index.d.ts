@@ -8,3 +8,8 @@ interface HeaderInfo {
   client: string
   uid: string
 }
+
+interface User {
+  sign_in: boolean
+  info: any
+}
