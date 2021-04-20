@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Router from 'next/router'
 
 const dispatch = useDispatch()
-
-const MyApp = ({Component, pageProps, router}: AppProps) => {
+const MyApp = ({Component, pageProps}: AppProps) => {
   const user:User = useSelector(selectUser)
 
   useEffect(() => {
@@ -28,6 +27,7 @@ const MyApp = ({Component, pageProps, router}: AppProps) => {
         id: user.info.userId
       }
       console.log(`${JSON.stringify(errorLog)}`)
+      Router.push('sign_in')
     }
   }
 }
