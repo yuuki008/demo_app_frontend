@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux'
 
-const dispatch = useDispatch()
 
 export const getHeaderInfo = (ctx) => {
+  const dispatch = useDispatch()
   const cookies = new Cookies(ctx.req && ctx.req.headers.cookie)
   const headerInfo = {
     'access-token': cookies.get('access-token'),

@@ -4,27 +4,29 @@ import { getAuth } from '../src/components/utils/ApiClient'
 import { signIn, headerInfo, getHeaderInfo, selectUser } from '../src/slice/auth'
 import { useSelector, useDispatch } from 'react-redux'
 import Router from 'next/router'
+import store from '../src/slice/store'
+import { Provider } from 'react-redux'
 
-const dispatch = useDispatch()
-const MyApp = ({Component, pageProps}: AppProps) => {
-  const user:User = useSelector(selectUser)
+const MyApp = ({Component, pageProps, ...props}: any) => {
 
   useEffect(() => {
-    if(user.sign_in === false) {
+    if(props.user.sign_in === false) {
       Router.push('/sign_in')
     }
   }, [])
 
   try {
-    return(
-      <Component {...pageProps} />
+    return (
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     )
   } catch (error) {
     if(error){
       const errorLog = {
         path: window.location.href,
         error: `${error}`,
-        id: user.info.userId
+        id: props.user.info.userId
       }
       console.log(`${JSON.stringify(errorLog)}`)
       Router.push('sign_in')
@@ -32,17 +34,27 @@ const MyApp = ({Component, pageProps}: AppProps) => {
   }
 }
 
-MyApp.getInitialProps = async({ Component, ctx }: AppContext) => {
-  getHeaderInfo(ctx)
-  const result = await getAuth(headerInfo)
-  if(result.success && result.body && result.body.user_sign_in) {
-    dispatch(signIn(result.body.user))
-  } else {
-    Router.push('sign_in')
+MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
+  const getDispatch = async () => {
+    const dispatch = useDispatch()
+    getHeaderInfo(ctx)
+    const result = await getAuth(headerInfo)
+    let user = {}
+    if(result.success && result.body && result.body.user_sign_in) {
+      dispatch(signIn(result.body.user))
+      user = { sign_in: true, info: result.body.user}
+    } else {
+      Router.push('sign_in')
+      user = { sign_in: false}
+    }
+    return user
   }
+  const user = getDispatch()
   let pageProps = {}
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
   }
-  return { pageProps }
+  return { pageProps, user}
 }
+
+export default MyApp
