@@ -1,24 +1,20 @@
 import { AppContext, AppProps } from 'next/app'
-import { useEffect } from 'react'
 import { getAuth } from '../src/components/utils/ApiClient'
-import { signIn, headerInfo, getHeaderInfo, selectUser } from '../src/slice/auth'
-import { useSelector, useDispatch } from 'react-redux'
+import { signIn, headerInfo, getHeaderInfo } from '../src/slice/auth'
+import { useDispatch } from 'react-redux'
 import Router from 'next/router'
 import store from '../src/slice/store'
 import { Provider } from 'react-redux'
+import { StoreProvider } from './provider'
+import '../src/assets/index.css'
 
-const MyApp = ({Component, pageProps, ...props}: any) => {
-
-  useEffect(() => {
-    if(props.user.sign_in === false) {
-      Router.push('/sign_in')
-    }
-  }, [])
-
+const MyApp = ({Component, pageProps, router, ...props}: any) => {
   try {
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <StoreProvider router={router}>
+          <Component {...pageProps} />
+        </StoreProvider>
       </Provider>
     )
   } catch (error) {
@@ -35,26 +31,25 @@ const MyApp = ({Component, pageProps, ...props}: any) => {
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
-  const getDispatch = async () => {
-    const dispatch = useDispatch()
-    getHeaderInfo(ctx)
-    const result = await getAuth(headerInfo)
-    let user = {}
-    if(result.success && result.body && result.body.user_sign_in) {
-      dispatch(signIn(result.body.user))
-      user = { sign_in: true, info: result.body.user}
-    } else {
-      Router.push('sign_in')
-      user = { sign_in: false}
-    }
-    return user
-  }
-  const user = getDispatch()
+  getAuthetication(ctx)
   let pageProps = {}
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
   }
-  return { pageProps, user}
+  return { pageProps }
 }
+
+const getAuthetication = async (ctx) => {
+  const dispatch = useDispatch()
+  getHeaderInfo(ctx)
+  const result = await getAuth(headerInfo)
+  if (result.success && result.body && result.body.user_sign_in) {
+    dispatch(signIn(result.body.user))
+  } else {
+    Router.push('sign_in')
+  }
+  return <></>
+}
+
 
 export default MyApp

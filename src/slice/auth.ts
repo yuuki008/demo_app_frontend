@@ -43,6 +43,6 @@ const authSlice:any = createSlice({
   }
 })
 
-export const selectUser = (state) => state.user
+export const selectUser = (state) => state.auth.user
 export const { signIn, signOut, headerInfo} = authSlice.actions
 export default authSlice.reducer
